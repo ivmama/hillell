@@ -1,0 +1,36 @@
+.action {
+    div {
+        display: flex;
+
+        button {
+            margin: 0.1em;
+            font-family: "Prompt", sans-serif;
+            border: none;
+            box-sizing: border-box;
+            font-weight: 700;
+            border-radius: 1em;
+            padding: 0.5em;
+            border: 0.1em solid transparent;
+            transition: all 0.5s;
+
+            &:nth-child(1) {
+                background-color: tomato;
+                color: #fff;
+                &:hover {
+                    color: tomato !important;
+                }
+            }
+
+            &:nth-child(2) {
+                background-color: rgb(255, 153, 0);
+
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: transparent;
+                border: 0.1em solid CurrentColor;
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+.app {
+    display: flex;
+    margin: 2em;
+    align-items: center;
+    position: relative;
+    .list-wrapper {
+        position: relative;
+        margin-right: 3em;
+        min-width: 50em;
+        min-height: 100vh;
+    }
+}
