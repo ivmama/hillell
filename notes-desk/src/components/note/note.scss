@@ -1,0 +1,28 @@
+.note {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  cursor: -webkit-grab;
+  border: 0.3em solid rgb(15, 51, 255);
+  border-radius: 1em;
+  background-color: #fff;
+  border-bottom-right-radius: 0;
+  display: flex;
+  justify-content: center;
+  &__wrap {
+    flex-grow: 1;
+
+    margin: 1em;
+  }
+  &__textarea {
+    resize: none;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+  }
+  &__item {
+    width: 100%;
+    height: 100%;
+  }
+}

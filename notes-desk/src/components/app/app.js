@@ -1,41 +1,60 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import api from "../../util/api";
 import TodoList from "../../TodoList";
-import './app.css';
+import Board from "../board/board.js";
+
+import "./app.css";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
 
   useEffect(() => {
-    api.get()
-    .then(({data}) => setTodos(data))
+    api.get().then(({ data }) => setNotes(data));
   }, []);
 
   function onTodoClick(todo) {
-    api.put(`/${todo.id}`, {...todo, isDone: !todo.isDone})
-    .then(
-      ({data}) =>
-        setTodos(todos.map(item => item.id === todo.id ? data : item))
-    )
+    api
+      .put(`/${todo.id}`, { ...todo, isDone: !todo.isDone })
+      .then(({ data }) =>
+        setNotes(notes.map((item) => (item.id === todo.id ? data : item)))
+      );
   }
 
-  function saveTodo() {
-    api.post("", {
-      title,
-      isDone: false
-    })
-    .then(({data}) => setTodos([...todos, data]))
+  function addEmptyNote() {
+    api
+      .post("", {
+        title: "",
+        isDone: false,
+      })
+      .then(({ data }) => setNotes([...notes, data]));
   }
+
+  const onNoteSave = (note) => {
+    api
+      .put(`/${note.id}`, { ...note })
+      .then(({ data }) =>
+        setNotes(notes.map((item) => (item.id === note.id ? data : item)))
+      );
+  };
+
+  const onNoteDelete = (id) => {
+    api.delete(`/${id}`).then(() => {
+      setNotes(notes.filter((item) => item.id !== id));
+    });
+  };
 
   return (
     <div className="App">
-      <input value={title} onChange={(e) => setTitle(e.target.value)}/>
-      <button type="button" onClick={saveTodo}>add</button>
-      <TodoList 
-        items={todos}
-        onItemClick={onTodoClick}
-      />
+      <button type="button" onClick={addEmptyNote}>
+        +
+      </button>
+      <Board
+        notes={notes}
+        onNoteClick={() => {}}
+        onNoteDelete={onNoteDelete}
+        onNoteSave={onNoteSave}
+      ></Board>
     </div>
   );
 }
