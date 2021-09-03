@@ -13,19 +13,21 @@ function App() {
     api.get().then(({ data }) => setNotes(data));
   }, []);
 
-  function onTodoClick(todo) {
-    api
-      .put(`/${todo.id}`, { ...todo, isDone: !todo.isDone })
-      .then(({ data }) =>
-        setNotes(notes.map((item) => (item.id === todo.id ? data : item)))
-      );
-  }
+  // function onTodoClick(todo) {
+  //   api
+  //     .put(`/${todo.id}`, { ...todo, isDone: !todo.isDone })
+  //     .then(({ data }) =>
+  //       setNotes(notes.map((item) => (item.id === todo.id ? data : item)))
+  //     );
+  // }
 
   function addEmptyNote() {
     api
       .post("", {
         title: "",
         isDone: false,
+        x: 0,
+        y: 0,
       })
       .then(({ data }) => setNotes([...notes, data]));
   }
@@ -44,6 +46,14 @@ function App() {
     });
   };
 
+  const onChange = (id, { x, y }) => {
+    const findNote = notes.find((v) => v.id === id);
+    const newPositions = notes.map((item) => {
+      return item.id !== id ? item : { ...item, x, y };
+    });
+    setNotes(newPositions);
+  };
+
   return (
     <div className="App">
       <button type="button" onClick={addEmptyNote}>
@@ -53,6 +63,7 @@ function App() {
         notes={notes}
         onNoteClick={() => {}}
         onNoteDelete={onNoteDelete}
+        onChange={onChange}
         onNoteSave={onNoteSave}
       ></Board>
     </div>
