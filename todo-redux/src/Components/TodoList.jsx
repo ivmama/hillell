@@ -1,48 +1,77 @@
 import React from "react";
 import TodoItem from "./TodoItem";
+import { Filter } from "../utils/filter";
 import { connect } from "react-redux";
-import { getItems } from "../store/actions";
-class TodoList extends React.Component {
+import {
+  updateTitle,
+  deleteTodo,
+  toggleTodo,
+  updateFilter,
+  toggleAll,
+} from "../store/actions";
 
+const filterItems = (items, filter) => {
+  switch (filter) {
+    case Filter.all:
+      return items;
+    case Filter.active:
+      return items.filter(({ completed }) => !completed);
+    case Filter.completed:
+      return items.filter(({ completed }) => completed);
+    default:
+      return items;
+  }
+};
 
-    render() {
-        const { todos, toggleTodo, toggleAll, onItemDeleted, selectedAll,
-            onItemValueChange, getItems} = this.props;
-        console.log(todos)
-        // console.log(getItems)
-        return (
-            <section className="main" style={{ display: "block" }}>
-                <input
-                    id="toggle-all"
-                    className="toggle-all"
-                    type="checkbox"
-                    checked={selectedAll}
-                    onChange={() => toggleAll()} />
-                <label htmlFor="toggle-all">Mark all as complete</label>
-                <ul className="todo-list">
-                    {
-                        todos.map(
-                            (item, idx) =>
-                                <TodoItem
-                                    key={item.id}
-                                    item={item}
-                                    // onItemValueChange={onItemValueChange} toggleTodo={toggleTodo}
-                                    // onItemDeleted={() => onItemDeleted(idx)}
-                                />
-                        )
-                    }
-                </ul>
-            </section>
-        );
-    }
-}
+const TodoList = ({
+  todos,
+  filter,
+  toggleAll,
+  selectedAll,
+  updateTitle,
+  deleteTodo,
+  toggleTodo,
+}) => {
+  const getIsAllItemsSelected = (todos) => {
+    console.log(todos.every(({ completed }) => completed));
+    return todos.every(({ completed }) => completed);
+  };
+  getIsAllItemsSelected(todos);
+  return (
+    <section className="main" style={{ display: "block" }}>
+      <input
+        id="toggle-all"
+        className="toggle-all"
+        type="checkbox"
+        checked={selectedAll}
+        onChange={() => toggleAll()}
+      />
+      <label htmlFor="toggle-all">Mark all as complete</label>
+      <ul className="todo-list">
+        {filterItems(todos, filter).map((item) => (
+          <TodoItem
+            key={item.id}
+            item={item}
+            updateTitle={updateTitle}
+            deleteTodo={deleteTodo}
+            toggleTodo={toggleTodo}
+          />
+        ))}
+      </ul>
+    </section>
+  );
+};
 
 const mapStateToProps = (state) => {
-    return { todos: state.todos }
-}
+  return { todos: state.todos, filter: state.filter };
+};
 
-// const mapDispatchToProps = {
-//     getItems
-// }
+const mapDispatchToProps = {
+  updateTitle,
+  deleteTodo,
+  toggleTodo,
+  updateFilter,
+  toggleAll,
+};
 
-export default connect(mapStateToProps)(TodoList);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

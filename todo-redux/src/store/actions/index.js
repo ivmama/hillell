@@ -4,19 +4,29 @@ import {
   ACTION_UPDATE_FILTER,
   ACTION_UPDATE_TITLE,
   ACTION_TOGGLE_ITEM,
-  ACTION_GET_ALL_ITEM
+  ACTION_TOOGLE_ALL,
 } from "../reducers";
 
-export const addTodo = (payload) => ({ type: ACTION_ADD_ITEM, payload });
+export const addTodo = (title) => ({
+  type: ACTION_ADD_ITEM,
+  payload: { id: Date.now(), title, completed: false },
+});
 
-export const deleteTodo = (payload) => ({ type: ACTION_DELETE_ITEM, payload });
+export const deleteTodo = (id) => ({ type: ACTION_DELETE_ITEM, payload: id });
 
-export const updateFilter = () => ({ type: ACTION_UPDATE_FILTER });
+export const updateFilter = (filter) => ({
+  type: ACTION_UPDATE_FILTER,
+  payload: filter,
+});
 
-export const toggleTodo = (payload) => ({ type: ACTION_TOGGLE_ITEM , payload});
+export const toggleTodo = (id) => ({ type: ACTION_TOGGLE_ITEM, payload: id });
 
-export const updateTitle = (payload) => ({ type: ACTION_UPDATE_TITLE, payload});
+export const updateTitle = (id, title) => ({
+  type: ACTION_UPDATE_TITLE,
+  payload: { id, title },
+});
 
-export const getItems = () => ({ type: ACTION_GET_ALL_ITEM});
-
-// export const add = (payload) => ({ type: ACTION_ADD, payload });
+export const toggleAll = (completed) => ({
+  type: ACTION_TOOGLE_ALL,
+  payload: completed,
+});
