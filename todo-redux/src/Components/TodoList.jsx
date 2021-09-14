@@ -35,15 +35,14 @@ const TodoList = ({
   const getIsAllItemsSelected = (todos) => {
     return todos.every(({ completed }) => completed);
   };
- ;
   return (
     <section className="main" style={{ display: "block" }}>
       <input
         id="toggle-all"
         className="toggle-all"
         type="checkbox"
-        checked={ getIsAllItemsSelected(todos)}
-        onChange={() => toggleAll()}
+        checked={getIsAllItemsSelected(todos)}
+        onChange={() => toggleAll(getIsAllItemsSelected(todos))}
       />
       <label htmlFor="toggle-all">Mark all as complete</label>
       <ul className="todo-list">

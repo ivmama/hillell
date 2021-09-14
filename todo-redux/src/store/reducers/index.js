@@ -40,11 +40,12 @@ const reducer = (state = initialState, { type, payload }) => {
           v.id === payload ? { ...v, completed: !v.completed } : v
         ),
       };
-    case ACTION_TOOGLE_ALL: 
+    case ACTION_TOOGLE_ALL:
+      console.log("что ставить?", payload);
       return {
-        ...state, 
-        // todos: state.todos.map
-      }
+        ...state,
+        todos: state.todos.map((v) => ({ ...v, completed: !payload })),
+      };
     default:
       return state;
   }
