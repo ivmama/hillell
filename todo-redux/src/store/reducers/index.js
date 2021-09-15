@@ -7,6 +7,7 @@ export const ACTION_UPDATE_TITLE = "UPDATE_TITLE";
 export const ACTION_TOGGLE_ITEM = "TOGGLE_ITEM";
 export const ACTION_TOOGLE_ALL = "TOGGLE_ALL";
 export const ACTION_GET_ALL_ITEM = "GET_ALL_ITEM";
+export const ACTION_CLEAR_ALL = "CLEAR_ALL";
 
 const initialState = {
   todos: [],
@@ -41,10 +42,14 @@ const reducer = (state = initialState, { type, payload }) => {
         ),
       };
     case ACTION_TOOGLE_ALL:
-      console.log("что ставить?", payload);
       return {
         ...state,
         todos: state.todos.map((v) => ({ ...v, completed: !payload })),
+      };
+    case ACTION_CLEAR_ALL:
+      return {
+        ...state,
+        todos: state.todos.filter((v) => !v.completed),
       };
     default:
       return state;

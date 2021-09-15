@@ -12,8 +12,6 @@ const FilterList = ({ updateFilter, filter }) => {
   const btnList = () => {
     const isActiveBtn = filter;
     return buttons.map(({ id, value }, idx) => {
-      console.log(isActiveBtn);
-      console.log(id, value);
       return (
         <li key={idx}>
           <a
@@ -32,7 +30,6 @@ const FilterList = ({ updateFilter, filter }) => {
 
 const mapStateToProps = (state) => ({
   filter: state.filter,
-  todos: state.todos,
 });
 
 const mapDispatchToProps = {

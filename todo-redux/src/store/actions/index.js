@@ -5,6 +5,7 @@ import {
   ACTION_UPDATE_TITLE,
   ACTION_TOGGLE_ITEM,
   ACTION_TOOGLE_ALL,
+  ACTION_CLEAR_ALL,
 } from "../reducers";
 
 export const addTodo = (title) => ({
@@ -30,3 +31,6 @@ export const toggleAll = (completed) => ({
   type: ACTION_TOOGLE_ALL,
   payload: completed,
 });
+export const clearAll = () => ({
+  type: ACTION_CLEAR_ALL
+})
